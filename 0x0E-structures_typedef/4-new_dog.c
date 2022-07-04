@@ -1,90 +1,48 @@
-#include <stdio.h>
-#include "dog.h"
 #include <stdlib.h>
-
+#include "dog.h"
 /**
- * _strlen - swaps integers with pointers.
- * @s: is a pointer to a char
- *
- * Return: nothing.
-**/
-int _strlen(char *s)
-{
-int i;
-for (i = 0; *s != '\0'; s++)
-{
-i++;
-}
-return (i);
-}
-
-/**
- * _strncpy - Swaps integers wih pointers.
- *
- * @dest: is a pointer to a char.
- *
- * @src: is a pointer to a char.
- *
- * @n: is a pointer to an int.
- *
- * Return: Always 0.
- */
-
-char *_strncpy(char *dest, char *src, int n)
-{
-int i;
-
-for (i = 0; i < n && src[i] != '\0'; i++)
-dest[i] = src[i];
-
-for (i = i; i < n; i++)
-dest[i] = '\0';
-
-return (dest);
-}
-
-/**
- * new_dog - Creates function with copy of name and owner
- *
- * @name: name parameter
- * @age: age parameter
- * @owner: owner parameter
- *
- * Return: nothing.
-**/
+* new_dog - makes a new struct dog
+* @name: his/her name
+* @age: how old is he
+* @owner: who are you
+* Return: new dog
+*/
 
 dog_t *new_dog(char *name, float age, char *owner)
 {
-dog_t *newDog;
-char *newName;
-char *newOwner;
-int size = 4;
+unsigned int i, namel, ownerl;
+dog_t *dog;
 
-newDog = (dog_t *)malloc(sizeof(struct dog) * size);
-if (newDog == NULL)
+if (name == NULL || owner == NULL)
+return (NULL);
+dog = malloc(sizeof(dog_t));
+if (dog == NULL)
+return (NULL);
+for (namel = 0; name[namel]; namel++)
+;
+namel++;
+dog->name = malloc(namel * (sizeof(char)));
+if (dog->name == NULL)
 {
-free(newDog);
+free(dog);
 return (NULL);
 }
-newName = (char *)malloc(sizeof((name) + 1) * size);
-if (newName == NULL)
+for (i = 0; i < namel; i++)
+dog->name[i] = name[i];
+
+dog->age = age;
+
+for (ownerl = 0; owner[ownerl]; ownerl++)
+;
+ownerl++;
+dog->owner = malloc(ownerl * (sizeof(char)));
+if (dog->owner == NULL)
 {
-free(newDog);
+free(dog->name);
+free(dog);
 return (NULL);
 }
-newOwner = (char *)malloc(sizeof((owner) + 1) * size);
-if (newOwner == NULL)
-{
-free(newDog);
-free(newName);
-return (NULL);
-}
-newName = name;
-newOwner = owner;
-
-newDog->name = newName;
-newDog->owner = newOwner;
-newDog->age = age;
-
-return (newDog);
+for (i = 0; i < ownerl; i++)
+dog->owner[i] = owner[i];
+return (dog);
 }
