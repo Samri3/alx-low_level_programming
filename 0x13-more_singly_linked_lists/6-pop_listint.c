@@ -1,22 +1,23 @@
 #include "lists.h"
-
 /**
- * pop_listint - deletes and returnes the head node's data
- * @head: This is my structures
- * Return: Return to head node's data(n)
+ * pop_listint - this function deletes the head node of a list
+ * @head: the pointer to the struct
+ *
+ * Return: head node's data
  */
-
 int pop_listint(listint_t **head)
 {
-	listint_t *phead;
-	int result;
+	listint_t *f;
+	int d;
 
 	if (*head == NULL)
+	{
 		return (0);
-	result = (*head)->n;
-	phead = *head;
-	*head = (*head)->next;
-	free(phead);
-	return (result);
-}
+	}
 
+	d = (*head)->n;
+	f = (*head)->next;
+	free(*head);
+	*head = f;
+	return (d);
+}
